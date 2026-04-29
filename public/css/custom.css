@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.content-wrapper {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+}
+
+.card {
+    border-radius: 12px !important;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+}
+
+.small-box {
+    border-radius: 16px !important;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.small-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.small-box .icon {
+    font-size: 5rem;
+    opacity: 0.3;
+    top: 10px;
+    right: 10px;
+}
+
+.btn {
+    border-radius: 8px !important;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.main-sidebar {
+    background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%) !important;
+}
+
+.brand-link {
+    background: rgba(0,0,0,0.2) !important;
+}
+
+.main-footer {
+    background: #343a40;
+    color: #adb5bd;
+    border-top: 3px solid #007bff;
+}
+
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
+    min-height: 80vh;
+    color: white;
+}
+
+.hero h1 {
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.navbar-public {
+    background: rgba(255,255,255,0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}

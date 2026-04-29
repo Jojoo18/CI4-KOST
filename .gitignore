@@ -1,0 +1,25 @@
+# Environment file (jangan sampai kredensial tersebar)
+.env
+
+# Folder vendor (bisa diinstall ulang via composer)
+/vendor/
+
+# File cache & log
+/writable/cache/*
+/writable/logs/*
+/writable/uploads/*
+/writable/session/*
+!writable/cache/.gitkeep
+!writable/logs/.gitkeep
+!writable/uploads/.gitkeep
+!writable/session/.gitkeep
+
+# Editor
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
