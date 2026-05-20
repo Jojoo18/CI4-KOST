@@ -6,7 +6,7 @@
         <h3 class="card-title">Daftar Pemesanan</h3>
     </div>
     <div class="card-body table-responsive p-0">
-        <table class="table table-hover">
+        <table class="table table-bordered table-striped table-datatable">
             <thead>
                 <tr>
                     <th>No</th>
@@ -33,37 +33,24 @@
                     <td><?= badgeStatus($p['status']) ?></td>
                     <td>
                         <?php if ($p['bukti_bayar']): ?>
-                            <a href="<?= base_url('writable/uploads/bukti/' . $p['bukti_bayar']) ?>" target="_blank" class="btn btn-sm btn-outline-info">
-                                <i class="fas fa-file"></i> Lihat
-                            </a>
+                            <a href="<?= base_url('download/bukti/' . $p['bukti_bayar']) ?>" class="btn btn-sm btn-info" target="_blank"><i class="fas fa-file-image"></i></a>
                         <?php else: ?>
-                            -
+                            - 
                         <?php endif; ?>
                     </td>
                     <td><?= $p['tgl_pesan'] ?></td>
                     <td>
                         <div class="btn-group">
-                            <!-- STRUK -->
-                            <a href="<?= base_url('pemesanan/struk/'.$p['id_pesanan']) ?>" class="btn btn-sm btn-info" target="_blank" title="Cetak Struk">
-                                <i class="fas fa-receipt"></i>
-                            </a>
-
-                            <!-- KONFIRMASI DP -->
+                            <a href="<?= base_url('pemesanan/struk/'.$p['id_pesanan']) ?>" class="btn btn-sm btn-info" target="_blank"><i class="fas fa-receipt"></i></a>
                             <?php if ($p['status'] == 'menunggu_dp'): ?>
                                 <a href="<?= base_url('pemesanan/konfirmasi/'.$p['id_pesanan']) ?>" class="btn btn-sm btn-success">Konfirmasi DP</a>
                             <?php endif; ?>
-                            
-                            <!-- LUNAS -->
                             <?php if ($p['status'] == 'dp_diterima'): ?>
                                 <a href="<?= base_url('pemesanan/lunas/'.$p['id_pesanan']) ?>" class="btn btn-sm btn-primary">Lunas</a>
                             <?php endif; ?>
-                            
-                            <!-- BATAL -->
                             <?php if ($p['status'] != 'batal' && $p['status'] != 'lunas'): ?>
                                 <a href="<?= base_url('pemesanan/batal/'.$p['id_pesanan']) ?>" class="btn btn-sm btn-danger">Batal</a>
                             <?php endif; ?>
-                            
-                            <!-- EDIT -->
                             <a href="<?= base_url('pemesanan/edit/'.$p['id_pesanan']) ?>" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                         </div>
                     </td>
@@ -76,15 +63,22 @@
 
 <?php
 function badgeStatus($status) {
-    $map = [
-        'menunggu_dp' => 'warning',
-        'dp_diterima' => 'info',
-        'lunas'       => 'success',
-        'batal'       => 'danger',
-    ];
+    $map = ['menunggu_dp' => 'warning', 'dp_diterima' => 'info', 'lunas' => 'success', 'batal' => 'danger'];
     $badge = $map[$status] ?? 'secondary';
     return '<span class="badge badge-'.$badge.'">'.str_replace('_', ' ', ucfirst($status)).'</span>';
 }
 ?>
 
+<?= $this->endSection() ?>
+<?= $this->section('scripts') ?>
+<script>
+    $(document).ready(function () {
+        $('.table-datatable').DataTable({
+            "responsive": true,
+            "autoWidth": false,
+            "pageLength": 10,
+            "language": { "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json" }
+        });
+    });
+</script>
 <?= $this->endSection() ?>

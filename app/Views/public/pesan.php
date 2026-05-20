@@ -37,20 +37,26 @@
                         <input type="hidden" name="id_kamar" value="<?= $kamar['id_kamar'] ?>">
 
                         <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label>Nama Lengkap *</label>
-                                <input type="text" name="nama_pemesan" class="form-control" value="<?= old('nama_pemesan') ?>" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>No HP *</label>
-                                <input type="text" name="no_hp" class="form-control" value="<?= old('no_hp') ?>" required>
-                            </div>
-                        </div>
+    <div class="form-group col-md-6">
+        <label>Nama Lengkap *</label>
+        <input type="text" name="nama_pemesan" class="form-control" value="<?= old('nama_pemesan') ?>" required>
+    </div>
+    <div class="form-group col-md-6">
+        <label>No HP *</label>
+        <input type="text" name="no_hp" class="form-control" value="<?= old('no_hp') ?>" required>
+    </div>
+</div>
 
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" name="email" class="form-control" value="<?= old('email') ?>">
-                        </div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label>No KTP *</label>
+        <input type="text" name="no_ktp" class="form-control" value="<?= old('no_ktp') ?>" required>
+    </div>
+    <div class="form-group col-md-6">
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" value="<?= old('email') ?>">
+    </div>
+</div>
 
                         <div class="form-row">
                             <div class="form-group col-md-6">

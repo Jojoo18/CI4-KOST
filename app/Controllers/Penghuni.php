@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Models\PenghuniModel;
 use App\Models\KamarModel;
+use App\Models\TagihanModel;
 
 class Penghuni extends BaseController
 {
@@ -80,20 +81,44 @@ class Penghuni extends BaseController
     }
 
     // ─── Override store ───
-    public function store()
-    {
-        $data = [];
-        foreach ($this->config['fields'] as $f) {
-            $data[$f['name']] = $this->request->getPost($f['name']);
-        }
-        // Jika status aktif, ubah status kamar menjadi terisi
-        if ($data['status'] == 'aktif') {
-            $this->kamarModel->update($data['id_kamar'], ['status' => 'terisi']);
-        }
-        $this->model->insert($data);
-        return redirect()->to($this->config['routePrefix'])->with('success', 'Penghuni berhasil ditambahkan');
+   public function store()
+{
+    $data = [];
+    foreach ($this->config['fields'] as $f) {
+        $data[$f['name']] = $this->request->getPost($f['name']);
     }
 
+    $this->model->insert($data);
+    $id_penghuni = $this->model->getInsertID();
+
+    // Ubah status kamar jika penghuni aktif
+    if ($data['status'] == 'aktif') {
+        $this->kamarModel->update($data['id_kamar'], ['status' => 'terisi']);
+    }
+
+    // Otomatis buat tagihan untuk tahun ini
+    $tagihanModel = new \App\Models\TagihanModel();
+    $kamar = $this->kamarModel->find($data['id_kamar']);
+    $tagihanModel->insert([
+        'id_penghuni' => $id_penghuni,
+        'tahun'       => date('Y'),
+        'total_bayar' => $kamar['harga_per_bulan'] * 12,
+        'status'      => 'lunas', // langsung lunas
+        'tgl_bayar'   => date('Y-m-d'),
+    ]);
+
+    // ✅ Catat pemasukan ke Cashflow
+    $cashflowModel = new \App\Models\CashflowModel();
+    $cashflowModel->insert([
+        'tipe'         => 'pemasukan',
+        'jumlah'       => $kamar['harga_per_bulan'] * 12,
+        'keterangan'   => 'Sewa kamar ' . $kamar['nomor_kamar'] . ' - ' . $data['nama_lengkap'],
+        'tanggal'      => date('Y-m-d'),
+        'metode_bayar' => 'tunai', // default
+    ]);
+
+    return redirect()->to($this->config['routePrefix'])->with('success', 'Penghuni berhasil ditambahkan + pemasukan tercatat.');
+}
     // ─── Override update ───
     public function update($id)
     {
@@ -130,6 +155,9 @@ class Penghuni extends BaseController
         if ($penghuni['status'] == 'aktif') {
             $this->kamarModel->update($penghuni['id_kamar'], ['status' => 'tersedia']);
         }
+        // Hapus semua tagihan terkait
+        $tagihanModel = new \App\Models\TagihanModel();
+        $tagihanModel->where('id_penghuni', $id)->delete();
         $this->model->delete($id);
         return redirect()->to($this->config['routePrefix'])->with('success', 'Penghuni dihapus');
     }

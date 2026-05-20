@@ -6,7 +6,8 @@ class InventoriModel extends Model
 {
     protected $table      = 'tbl_inventori';
     protected $primaryKey = 'id_barang';
-    protected $allowedFields = ['id_kamar', 'nama_barang', 'jumlah', 'kondisi', 'keterangan'];
+    protected $allowedFields = [
+    'id_kamar', 'nama_barang', 'jumlah', 'harga_satuan', 'kondisi', 'keterangan'];
     protected $useTimestamps = false;
 
     public function getInventoriWithKamar()

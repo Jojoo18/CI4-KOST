@@ -18,9 +18,8 @@
                 <i class="fas fa-home text-primary"></i> KostRegar
             </a>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a href="<?= base_url('katalog') ?>" class="nav-link">Katalog</a></li>
-                <li class="nav-item"><a href="<?= base_url('login') ?>" class="btn btn-outline-primary btn-sm ml-3">Login Admin</a></li>
-            </ul>
+    <li class="nav-item"><a href="<?= base_url('katalog') ?>" class="nav-link">Katalog</a></li>
+</ul>
         </div>
     </nav>
     <div class="content-wrapper" style="margin-top: 56px;">

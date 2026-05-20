@@ -6,7 +6,10 @@ class PenghuniModel extends Model
 {
     protected $table      = 'tbl_penghuni';
     protected $primaryKey = 'id_penghuni';
-    protected $allowedFields = ['id_kamar', 'nama_lengkap', 'no_ktp', 'no_hp', 'tgl_masuk', 'tgl_keluar', 'status'];
+    protected $allowedFields = [
+    'id_kamar', 'nama_lengkap', 'no_ktp', 'no_hp',
+    'tgl_masuk', 'tgl_keluar', 'status'
+];
     protected $useTimestamps = false;
 
     public function getPenghuniWithKamar()

@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Models\TagihanModel;
 use App\Models\PenghuniModel;
+use App\Models\CashflowModel;
 
 class Tagihan extends BaseController
 {
@@ -65,6 +67,10 @@ class Tagihan extends BaseController
         ];
     }
 
+    // -----------------------------------------------------------------
+    //  CRUD STANDAR
+    // -----------------------------------------------------------------
+
     public function index()
     {
         return view('crud', [
@@ -93,6 +99,12 @@ class Tagihan extends BaseController
             $data[$f['name']] = $this->request->getPost($f['name']);
         }
         $this->model->insert($data);
+
+        // Jika status lunas saat tambah, catat pemasukan
+        if ($data['status'] == 'lunas') {
+            $this->catatPemasukan($this->model->getInsertID());
+        }
+
         return redirect()->to($this->config['routePrefix'])->with('success', 'Data berhasil ditambahkan');
     }
 
@@ -115,6 +127,12 @@ class Tagihan extends BaseController
             $data[$f['name']] = $this->request->getPost($f['name']);
         }
         $this->model->update($id, $data);
+
+        // Jika status diubah jadi lunas, catat pemasukan
+        if ($data['status'] == 'lunas') {
+            $this->catatPemasukan($id);
+        }
+
         return redirect()->to($this->config['routePrefix'])->with('success', 'Data berhasil diupdate');
     }
 
@@ -122,5 +140,23 @@ class Tagihan extends BaseController
     {
         $this->model->delete($id);
         return redirect()->to($this->config['routePrefix'])->with('success', 'Data berhasil dihapus');
+    }
+
+    // -----------------------------------------------------------------
+    //  METHOD TAMBAHAN: Catat pemasukan ke Cashflow
+    // -----------------------------------------------------------------
+    private function catatPemasukan($id_tagihan)
+    {
+        $tagihan = $this->model->find($id_tagihan);
+        if (!$tagihan) return;
+
+        $cashflowModel = new CashflowModel();
+        $cashflowModel->insert([
+            'tipe'         => 'pemasukan',
+            'jumlah'       => $tagihan['total_bayar'],
+            'keterangan'   => 'Pembayaran tagihan tahun ' . $tagihan['tahun'] . ' - Penghuni ID ' . $tagihan['id_penghuni'],
+            'tanggal'      => date('Y-m-d'),
+            'metode_bayar' => 'transfer',
+        ]);
     }
 }

@@ -78,4 +78,68 @@
 </div>
 <?php endif; ?>
 
+<?php if ($jumlah_tagihan_belum_lunas > 0): ?>
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle mr-2"></i>
+            <strong>Perhatian!</strong> Terdapat <strong><?= $jumlah_tagihan_belum_lunas ?></strong> tagihan yang belum lunas.
+            <a href="<?= base_url('tagihan') ?>" class="btn btn-sm btn-outline-dark ml-3">Lihat Tagihan</a>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+<!-- 🔔 Pengingat Tagihan Belum Lunas -->
+<?php if (!empty($tagihan_terlambat)): ?>
+<div class="row">
+    <div class="col-12">
+        <div class="card card-warning">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    Tagihan Belum Lunas
+                </h3>
+                <div class="card-tools">
+                    <a href="<?= base_url('tagihan') ?>" class="btn btn-tool btn-sm">
+                        <i class="fas fa-arrow-right"></i> Lihat Semua
+                    </a>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Penghuni</th>
+                            <th>Kamar</th>
+                            <th>Tahun</th>
+                            <th>Total</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($tagihan_terlambat as $t): ?>
+                        <tr>
+                            <td><?= esc($t['nama_lengkap']) ?></td>
+                            <td><?= esc($t['nomor_kamar']) ?></td>
+                            <td><?= $t['tahun'] ?></td>
+                            <td>Rp <?= number_format($t['total_bayar'], 0, ',', '.') ?></td>
+                            <td>
+                                <a href="<?= base_url('tagihan/edit/' . $t['id_tagihan']) ?>" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i> Bayar
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
 <?= $this->endSection() ?>

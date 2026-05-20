@@ -69,4 +69,15 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->get('pemesanan/konfirmasi/(:num)', 'PemesananController::konfirmasiDp/$1');
     $routes->get('pemesanan/lunas/(:num)', 'PemesananController::lunas/$1');
     $routes->get('pemesanan/batal/(:num)', 'PemesananController::batal/$1');
+
+    // Public route untuk lihat struk
+    $routes->get('struk/(:num)', 'PublicController::struk/$1');
+
+    // Admin route untuk download struk (dalam grup filter auth)
+    $routes->get('pemesanan/struk/(:num)', 'PemesananController::struk/$1');
+
+    $routes->get('download/bukti/(:any)', 'DownloadController::buktiBayar/$1');
+
+    $routes->get('profil', 'Profil::index');
+    $routes->post('profil/update', 'Profil::update');
 });

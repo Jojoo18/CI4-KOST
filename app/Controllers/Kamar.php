@@ -32,6 +32,12 @@ class Kamar extends BaseController
                     'valueMap' => ['standar' => 'Standar', 'deluxe' => 'Deluxe', 'vip' => 'VIP'],
                 ],
                 [
+                    'name'     => 'kapasitas',        
+                    'label'    => 'Kapasitas (orang)',
+                    'type'     => 'number',
+                    'required' => true,
+                ],
+                [
                     'name'     => 'harga_per_bulan',
                     'label'    => 'Harga/Bulan',
                     'type'     => 'number',

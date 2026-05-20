@@ -33,12 +33,16 @@
                             </div>
                         <?php endif; ?>
                     </div>
+                    
                     <div class="card-body text-center">
+                        <!-- Tipe & Kapasitas -->
                         <span class="badge badge-<?= $k['tipe'] == 'vip' ? 'danger' : ($k['tipe'] == 'deluxe' ? 'warning' : 'secondary') ?> mb-2">
-                            <?= ucfirst($k['tipe']) ?>
+                            <?= ucfirst($k['tipe']) ?> • <?= $k['kapasitas'] ?? 1 ?> Orang
                         </span>
+                        
                         <h5 class="card-title">Kamar <?= $k['nomor_kamar'] ?></h5>
                         <p class="card-text small text-muted"><?= $k['fasilitas'] ?? 'Fasilitas standar' ?></p>
+                        
                         <h4 class="text-success mb-2">
                             Rp <?= number_format($k['harga_per_bulan'] * 12, 0, ',', '.') ?> <small>/tahun</small>
                         </h4>

@@ -8,9 +8,10 @@ class PemesananModel extends Model
     protected $table      = 'tbl_pemesanan';
     protected $primaryKey = 'id_pesanan';
     protected $allowedFields = [
-        'id_kamar', 'nama_pemesan', 'no_hp', 'email',
+        'id_kamar', 'nama_pemesan', 'no_hp', 'no_ktp', 'email',
         'tgl_mulai', 'total_biaya', 'dp_dibayar',
-        'metode_bayar', 'status', 'tgl_bayar_dp', 'tgl_lunas'
+        'metode_bayar', 'status', 'bukti_bayar',
+        'tgl_bayar_dp', 'tgl_lunas'
     ];
     protected $useTimestamps = false;
 

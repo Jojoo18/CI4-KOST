@@ -44,6 +44,13 @@ class Inventori extends BaseController
                     'required' => true,
                 ],
                 [
+                    'name'     => 'harga_satuan',
+                    'label'    => 'Harga Satuan (Rp)',
+                    'type'     => 'number',
+                    'format'   => 'rupiah',
+                    'required' => true,
+                ],
+                [
                     'name'    => 'kondisi',
                     'label'   => 'Kondisi',
                     'type'    => 'select',
